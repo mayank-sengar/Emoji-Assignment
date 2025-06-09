@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cool Emoji 😎</title>
+  <style>
+    body {
+      background: #f0f0f0;
+      display: flex;
+      height: 100vh;
+      justify-content: center;
+      align-items: center;
+    }
+    canvas {
+      border: 2px solid #333;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+<canvas id="emojiCanvas" width="400" height="400"></canvas>
+<script>
+  const canvas = document.getElementById("emojiCanvas");
+  const ctx = canvas.getContext("2d");
+
+  // Draw face
+  ctx.beginPath();
+  ctx.arc(200, 200, 120, 0, Math.PI * 2, true); // face
+  ctx.fillStyle = "#FFD93B"; // emoji yellow
+  ctx.fill();
+  ctx.stroke();
+
+  // Draw sunglasses
+  ctx.fillStyle = "#000";
+  ctx.fillRect(120, 160, 60, 30); // left lens
+  ctx.fillRect(220, 160, 60, 30); // right lens
+  ctx.fillRect(180, 170, 40, 10); // bridge
+
+  // Draw smile
+  ctx.beginPath();
+  ctx.arc(200, 230, 50, 0, Math.PI, false); // smile
+  ctx.lineWidth = 5;
+  ctx.strokeStyle = "#000";
+  ctx.stroke();
+
+</script>
+</body>
+</html>

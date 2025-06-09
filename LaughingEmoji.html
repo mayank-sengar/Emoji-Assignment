@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Simple Laughing Emoji</title>
+  <style>
+    body {
+      margin: 0;
+      background: #d28902;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+    }
+    canvas {
+      border: 2px solid #ddd;
+      border-radius: 15px;
+      background: white;
+    }
+    button {
+    
+      margin-top: 20px;
+      padding: 12px 24px;
+      font-size: 16px;
+      border: none;
+      background-color: green;
+      color: white;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover {
+      background-color: green;
+    }
+  </style>
+</head>
+<body>
+<canvas id="emojiCanvas" width="300" height="300"></canvas>
+<button id="laughBtn">Click to Laugh </button>
+
+<script>
+  const canvas = document.getElementById("emojiCanvas");
+  const ctx = canvas.getContext("2d");
+  const button = document.getElementById("laughBtn");
+  let isAnimating = false;
+  let angle = 0;
+
+  function drawSimpleEmoji(bounce = 0) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    const centerX = 150;
+    const centerY = 150 + bounce;
+    
+    //face
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, 100, 0, Math.PI * 2);
+    ctx.fillStyle = "#FFD700";
+    ctx.fill();
+    ctx.strokeStyle = "#FFA500";
+    ctx.lineWidth = 3;
+    ctx.stroke();
+    
+    //eyes 
+    ctx.strokeStyle = "#000";
+    ctx.lineWidth = 4;
+    ctx.lineCap = "round";
+    //left eye curve on 
+    ctx.beginPath();
+    ctx.arc(centerX - 40, centerY - 40, 20, 0, Math.PI);
+    ctx.stroke();   
+    //right eye curve
+    ctx.beginPath();
+    ctx.arc(centerX + 40, centerY - 40, 20, 0, Math.PI);
+    ctx.stroke();
+    //mouth
+    ctx.beginPath();
+    ctx.arc(centerX, centerY + 20, 40, 0, Math.PI);
+    ctx.fillStyle = "#FF69B4";
+    ctx.fill();
+    ctx.strokeStyle = "#000";
+    ctx.lineWidth = 2;
+    ctx.stroke();   
+    //tears(ellipse)
+    ctx.fillStyle = "#00BFFF";   
+    //left tears
+    ctx.beginPath();
+    ctx.ellipse(centerX - 73, centerY - 28, 6, 12, Math.PI / 4, 0, Math.PI * 4);
+    ctx.fill();    
+    ctx.beginPath();
+    ctx.ellipse(centerX - 87, centerY - 10, 4, 8, Math.PI / 6, 0, Math.PI * 2);
+    ctx.fill();   
+    //right tears
+    ctx.beginPath();
+    ctx.ellipse(centerX + 73, centerY - 28, 6, 12, -Math.PI / 4, 0, Math.PI * 2);
+    ctx.fill();
+    
+    ctx.beginPath();
+    ctx.ellipse(centerX + 87, centerY - 10, 4, 8, -Math.PI / 6, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  function animate() {
+    if (!isAnimating) return;    
+    const bounce = Math.sin(angle) * 5;
+    drawSimpleEmoji(bounce);
+    angle += 0.1;  
+    requestAnimationFrame(animate);
+  }
+
+  drawSimpleEmoji();
+
+  button.addEventListener("click", () => {
+    if (!isAnimating) {
+    
+      isAnimating = true;
+      button.textContent = "Stop Laughing";
+      button.style.backgroundColor="red"
+      animate();
+    } else {
+      isAnimating = false;
+      button.textContent = "Click to Laugh ";
+      drawSimpleEmoji();
+      button.style.backgroundColor="green"  
+    }
+  });
+</script>
+</body>
+</html>
